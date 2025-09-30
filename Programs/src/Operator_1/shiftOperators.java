@@ -1,4 +1,4 @@
-package Operator;
+package Operator_1;
 
 public class shiftOperators {
 //    >> Right Shift
@@ -8,7 +8,7 @@ public class shiftOperators {
         int a=10;
         System.out.println("Right shift by a of 10 "+(a>>1));
         System.out.println("Right shift by a of 10 "+(a>>2));
-        System.out.println("Left shift by a of 10 "+(a<<2));   s
+        System.out.println("Left shift by a of 10 "+(a<<2));
 
     }
 }
