@@ -1,4 +1,4 @@
-package Ingeritance.Animal;
+package OOP.Inheritance.Animal;
 
 public class Cat extends Animal {
     Cat(String name)

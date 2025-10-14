@@ -1,4 +1,4 @@
-package Ingeritance;
+package OOP.Inheritance;
 
 public class A {
 
