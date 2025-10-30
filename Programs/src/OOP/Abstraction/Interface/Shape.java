@@ -1,4 +1,4 @@
-package OOP.Abstraction.Interdace;
+package OOP.Abstraction.Interface;
 
 interface Shape {
     void draw();
