@@ -1,11 +1,13 @@
-public class NullPointerExceptionDemo extends Throwable {
+public class FinallyDemo {
     public static void main(String[] args) {
-        String s = null;
         System.out.println("Welcome to Exception Handling");
         try{
-            System.out.println(s.length());
+            int data = 25/0;
+            System.out.println(data);
         }catch (Exception e){
             System.out.println(e);
+        }finally{
+            System.out.println("Finally block always executed");
         }
 
     }

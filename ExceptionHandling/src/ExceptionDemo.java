@@ -6,7 +6,7 @@ public class ExceptionDemo {
         System.out.println("Welcome to Exception Handling");
         try{
             System.out.println(a/b);
-        }catch (Exception e){
+        }catch (ArithmeticException  e){
             System.out.println("Rest of the code of my program");
         }
 
