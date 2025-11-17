@@ -1,7 +1,11 @@
-public class InterrruptedExceptionDemo {
+package Exceptions;
+
+import java.io.FileReader;
+
+public class FileNotFoundDemo {
     public static void main(String[] args) {
         try{
-            Thread.sleep(1000);
+            FileReader fr = new FileReader("missing.txt");
         }catch (Exception e){
             System.out.println(e);
         }

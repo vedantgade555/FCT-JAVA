@@ -1,9 +1,11 @@
-public class StringIndexOutOfBoundExceptionDemo {
+package Exceptions;
+
+public class NullPointerExceptionDemo extends Throwable {
     public static void main(String[] args) {
-        String a = "Vedant";
+        String s = null;
         System.out.println("Welcome to Exception Handling");
         try{
-            System.out.println(a.charAt(7));
+            System.out.println(s.length());
         }catch (Exception e){
             System.out.println(e);
         }

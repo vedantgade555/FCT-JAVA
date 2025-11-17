@@ -1,9 +1,11 @@
-public class NullPointerExceptionDemo extends Throwable {
+package Exceptions;
+
+public class ArrayIndexOutOfBoundExceptionDemo {
     public static void main(String[] args) {
-        String s = null;
+        int[] a = {1,2,3,4,5};
         System.out.println("Welcome to Exception Handling");
         try{
-            System.out.println(s.length());
+            System.out.println(a[10]);
         }catch (Exception e){
             System.out.println(e);
         }

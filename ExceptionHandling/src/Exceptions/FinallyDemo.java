@@ -1,11 +1,15 @@
-public class ArrayIndexOutOfBoundExceptionDemo {
+package Exceptions;
+
+public class FinallyDemo {
     public static void main(String[] args) {
-        int[] a = {1,2,3,4,5};
         System.out.println("Welcome to Exception Handling");
         try{
-            System.out.println(a[10]);
+            int data = 25/0;
+            System.out.println(data);
         }catch (Exception e){
             System.out.println(e);
+        }finally{
+            System.out.println("Finally block always executed");
         }
 
     }
