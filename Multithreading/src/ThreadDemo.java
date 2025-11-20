@@ -16,5 +16,6 @@ public class ThreadDemo extends Thread implements Runnable{
         Runnable r = new ThreadDemo();
         Thread t3 = new Thread(r,"My Thread");
         t3.start();
+
     }
 }
