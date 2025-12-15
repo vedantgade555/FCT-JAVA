@@ -20,6 +20,6 @@ public class DaemonThreadDemo extends Thread{
         t2.start();
         t3.start();
 
-        System.out.println(Thread.currentThread().getName()+"Ends");
+        System.out.println(Thread.currentThread().getName()+"Ends  ");
     }
 }
