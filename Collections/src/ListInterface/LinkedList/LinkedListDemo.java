@@ -18,6 +18,8 @@ public class LinkedListDemo {
         l1.push("Sunjay");
         System.out.println(l1);
 
+        LinkedList<String> l2 = (LinkedList<String>) l1.clone();
+
         // Get Methods
 
         System.out.println(l1.get(3));
@@ -28,6 +30,31 @@ public class LinkedListDemo {
         System.out.println(l1.peek());
         System.out.println(l1.peekFirst());
         System.out.println(l1.peekLast());
+
+        // removing methods
+        l1.remove();
+        l1.remove(2);
+        l1.poll();
+        l1.pollFirst();
+        l1.pollLast();
+        System.out.println(l1);
+
+        // contains
+        System.out.println(l1.contains("Anup"));
+        System.out.println("Index of Ganesh is "+l1.indexOf("Ganesh"));
+
+        // toArray
+        l1.toArray();
+        System.out.println(l1);
+
+        // Adding data
+        l2.offer("Rajesh");
+        l2.offerFirst("Raghav");
+        l2.offerLast("Pranav");
+        System.out.println(l2);
+
+
+
     }
 
 }

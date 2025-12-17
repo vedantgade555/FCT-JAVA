@@ -56,6 +56,38 @@ public class ArrayListDemo1 {
         //lastIndexof
 //        System.out.println(lastIndexOf(l1));
 
+        // isEmpty()
+        System.out.println("Array is Empty or not "+l1.isEmpty());
+
+        // last Index
+        System.out.println("Last index is "+l1.lastIndexOf(10));
+
+        // toArray()
+        System.out.println("In Arra: "+l1.toArray());
+
+
+        // sublist
+        System.out.println("Sublist is "+l1.subList(1,4));
+
+        // size is
+        System.out.println("Size is "+l1.size());
+
+        // retainAll
+        System.out.println(l1.retainAll(l2)); // write the common elements
+
+        // clone
+        ArrayList<Integer> l3 = (ArrayList<Integer>) l1.clone();
+
+        // ensure capacity
+        // used to set capacity
+        ArrayList<Integer> l4 = new ArrayList<>();
+        l4.ensureCapacity(50);
+        for (int i = 0; i <50 ; i++) {
+            l4.add(i);
+        }
+        System.out.println(l4);
+
+
         // clear()
         l1.clear();
         System.out.println(l1);
