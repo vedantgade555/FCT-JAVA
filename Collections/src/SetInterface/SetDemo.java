@@ -41,5 +41,6 @@ public class SetDemo {
        // hs3.add(null);// it does not allow null value
 
         System.out.println("TreeSet "+hs3);
+
     }
 }
