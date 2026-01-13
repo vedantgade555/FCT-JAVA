@@ -2,6 +2,7 @@ package com;
 import java.io.*;
 
 import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,6 +28,14 @@ public class ServletConfigClass extends HttpServlet {
 		String n = config.getInitParameter("name");
 		String s = config.getInitParameter("surname");
 		pw.print("Init Parameter is "+n+" "+s);
+		
+		
+
+		ServletContext context = getServletContext();
+		String p = context.getInitParameter("Project");
+		pw.println("Context Parameter is: "+p);
+		
+		pw.close();
 	}
 
 }

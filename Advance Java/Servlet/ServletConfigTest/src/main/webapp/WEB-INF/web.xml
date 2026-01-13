@@ -43,6 +43,11 @@
 			<param-value>Industries</param-value>
 		</init-param>
 	</servlet>
+	
+	<context-param>
+		<param-name>Project</param-name>
+		<param-value>General</param-value>
+	</context-param>
 
 	<servlet-mapping>
 		<servlet-name>ServletConfigClass</servlet-name>
