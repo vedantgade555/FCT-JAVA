@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="SaveServlet" method="post">
+EmpId: <input type="number" name="id"><br>
+Name: <input type="text" name="name"><br>
+Password: <input type="password" name="password"><br>
+Email: <input type="text" name="email"><br>
+Country: <select name="country" style="width:150px">
+			<option>India</option>
+			<option>USA</option>
+			<option>Russia</option>
+			<option>UK</option>
+			<option>Other</option>
+		</select>
+		
+<input type="submit" value="Save Emp Details">
+</form>
+
+<a href="ViewServlet">View Employees</a>
+</body>
+</html>
