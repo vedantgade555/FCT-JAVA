@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hibernate-mapping>
+
+    <class name="test.Employee" table="employee1">
+
+        <!-- 1️⃣ ID MUST COME FIRST -->
+        <id name="id" column="eid">
+            <generator class="increment"/>
+        </id>
+
+        <!-- 2️⃣ THEN discriminator -->
+        <discriminator column="emp_type" type="string"/>
+
+        <!-- 3️⃣ Properties -->
+        <property name="name" column="name"/>
+
+        <!-- 4️⃣ Subclasses -->
+        <subclass name="test.RegEmp" discriminator-value="reg_emp">
+            <property name="salary" column="salary"/>
+            <property name="bonus" column="bonus"/>
+        </subclass>
+
+        <subclass name="test.ContractEmp" discriminator-value="contract_emp">
+            <property name="pay_per_hour" column="pay_per_hour"/>
+            <property name="contract_period" column="contract_period"/>
+        </subclass>
+
+    </class>
+
+</hibernate-mapping>
