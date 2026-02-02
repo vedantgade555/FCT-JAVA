@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+    <class name="test.Employee" table="employee">
+
+    <id name="empId" column="emp_id">
+        <generator class="increment"/>
+    </id>
+
+    <property name="empName" column="emp_name"/>
+
+    <many-to-one name="department" column="dept_id"
+                 class="test.Department"/>
+
+</class>
+    
+</hibernate-mapping>

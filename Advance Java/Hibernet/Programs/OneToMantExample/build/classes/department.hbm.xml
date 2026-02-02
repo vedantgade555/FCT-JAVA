@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+	<class name="test.Department" table="department">
+
+		<id name="deptId" column="dept_id">
+			<generator class="increment" />
+		</id>
+
+		<property name="deptName" column="dept_name" />
+
+		<set name="employees" cascade="all">
+			<key column="dept_id" />
+			<one-to-many class="test.Employee" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

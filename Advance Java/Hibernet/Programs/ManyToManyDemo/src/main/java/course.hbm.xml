@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hibernate-mapping package="test">
+
+    <class name="Course" table="course">
+        <id name="courseId" column="course_id">
+            <generator class="increment"/>
+        </id>
+
+        <property name="courseName" column="course_name"/>
+
+        <set name="students" table="student_course" inverse="true">
+            <key column="course_id"/>
+            <many-to-many column="student_id" class="test.Student"/>
+        </set>
+    </class>
+
+</hibernate-mapping>
