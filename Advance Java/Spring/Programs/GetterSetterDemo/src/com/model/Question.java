@@ -44,8 +44,6 @@ public class Question {
 		this.answer = answer;
 	}
 
-
-
 	public void display() {
 		System.out.println(id + " " + qname);
 		System.out.println("Ansers are : ");
