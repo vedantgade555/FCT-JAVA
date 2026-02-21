@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans
-           https://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
-           https://www.springframework.org/schema/context/spring-context.xsd">
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <!-- Component Scan -->
+    <context:component-scan base-package="com.config.annotations" />
 
-    <context:component-scan base-package=" com.config.annotations com.config.annotations"></context:component-scan>
+    <!-- List Bean -->
+    <util:list id="topics" list-class="java.util.LinkedList">
+        <value>Java</value>
+        <value>Python</value> 
+        <value>MongoDB</value>
+        <value>Android</value>
+        <value>Swift</value>
+        <value>Data Analytics</value>
+    </util:list>
 
 </beans>
