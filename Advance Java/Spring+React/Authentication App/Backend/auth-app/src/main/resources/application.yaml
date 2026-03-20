@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: auth-app
+  server:
+    port: 8555
+  datasource:
+    url: jdbc:mysql://localhost:3306/vedant
+    username: root
+    password: vedant@555
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
