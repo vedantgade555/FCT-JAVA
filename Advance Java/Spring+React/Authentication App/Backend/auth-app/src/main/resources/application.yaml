@@ -1,14 +1,29 @@
 spring:
   application:
     name: auth-app
-  server:
-    port: 8555
+
   datasource:
-    url: jdbc:mysql://localhost:3306/vedant
+    url: jdbc:mysql://localhost:3306/auth_app
     username: root
     password: vedant@555
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+#      Learn and Read this properties
+#    hikari:
+#      pool-name: HikariCP
+#      maximum-pool-size: 5
+#      connection-timeout: 30000
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+#      validation-timeout: 5000
+#      leak-detection-threshold: 0
+#      initialization-fail-timeout: -1
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    # dialect can be removed
+
+server:
+  port: 8555
