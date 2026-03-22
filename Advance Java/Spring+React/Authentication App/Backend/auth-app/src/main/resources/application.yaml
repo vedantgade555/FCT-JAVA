@@ -26,4 +26,6 @@ spring:
     # dialect can be removed
 
 server:
-  port: 8555
+#  port: 8555
+  error:
+    include-message: always

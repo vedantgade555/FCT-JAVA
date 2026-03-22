@@ -20,10 +20,15 @@ public class UserDto {
     private String email;
     private String password;
     private String image;
-    private boolean enable= true;
+    @Builder.Default
+    private Boolean enable = true;
+    @Builder.Default
     private Instant createdAt = Instant.now();
+    @Builder.Default
     private Instant updatedAt = Instant.now();
+    @Builder.Default
     private Provider provider = Provider.LOCAL;
-    @ManyToMany(fetch = FetchType.EAGER)
+    
+    @Builder.Default
     private Set<RoleDto> roles = new HashSet<>();
 }

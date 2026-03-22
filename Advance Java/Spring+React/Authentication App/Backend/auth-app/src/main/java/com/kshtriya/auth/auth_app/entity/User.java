@@ -27,11 +27,15 @@ public class User {
     private String email;
     private String password;
     private String image;
-    private boolean enable= true;
+    @Builder.Default
+    private Boolean enable = true;
+    @Builder.Default
     private Instant createdAt = Instant.now();
+    @Builder.Default
     private Instant updatedAt = Instant.now();
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Provider provider = Provider.LOCAL;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -39,6 +43,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
 //    @PrePersist this is used bcoz when entity created it will called automatically
@@ -50,6 +55,7 @@ public class User {
         updatedAt=now;
     }
 
+    @PreUpdate
     protected void onUpdate(){
         updatedAt=Instant.now();
     }
