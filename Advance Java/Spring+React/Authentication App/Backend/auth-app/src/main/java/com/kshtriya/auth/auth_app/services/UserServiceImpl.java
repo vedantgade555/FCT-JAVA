@@ -4,14 +4,16 @@ import com.kshtriya.auth.auth_app.dtos.UserDto;
 import com.kshtriya.auth.auth_app.entity.Provider;
 import com.kshtriya.auth.auth_app.entity.User;
 import com.kshtriya.auth.auth_app.exceptions.ResourceNotFoundException;
+import com.kshtriya.auth.auth_app.helper.UserHelper;
 import com.kshtriya.auth.auth_app.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-//import org.modelmapper.ModelMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -55,26 +57,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDto updateUser(UserDto userDto, String userId) {
-        return null; // TODO: Implement
+        UUID uid = UserHelper.parseUUID(userId);
+        User existingUser = userRepository.findById(uid).orElseThrow(() -> new ResourceNotFoundException("User Id not found with given id"));
+
+        // We are not change email id in this project due to security issue
+        if(userDto.getName() != null) existingUser.setName(userDto.getName());
+        if(userDto.getImage() != null) existingUser.setImage(userDto.getImage());
+
+        if(userDto.getProvider() != null) existingUser.setProvider(userDto.getProvider());
+        // TODO: change the password updation logic
+        if(userDto.getPassword() != null) existingUser.setPassword(userDto.getPassword());
+
+        // Assuming getEnable() returns a boolean or Boolean.
+        // Note: You might want a null check here if userDto.getEnable() can be null.
+        if(userDto.getEnable() != null) existingUser.setEnable(userDto.getEnable());
+        existingUser.setUpdatedAt(Instant.now());
+        User updatedUser = userRepository.save(existingUser);
+
+        return modelMapper.map(updatedUser, UserDto.class);
     }
 
     @Override
-    public UserDto deleteUser(String userId) {
-        return null; // TODO: Implement
+    @Transactional
+    public void deleteUser(String userId) {
+        UUID uId = UserHelper.parseUUID(userId);
+        User user = userRepository.findById(uId).orElseThrow(() -> new ResourceNotFoundException("User Id not found"));
+        userRepository.delete(user);
     }
 
     @Override
     public UserDto getUserById(String userId) {
-        // Fetch the user or throw an exception if not found
-        return null;
+        User user = userRepository.findById(UserHelper.parseUUID(userId)).orElseThrow(() -> new ResourceNotFoundException("User Id not found"));
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
     public Iterable<UserDto> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(user -> modelMapper.map(user, UserDto.class)) // Fixed lambda syntax here
+                .map(user -> modelMapper.map(user, UserDto.class))
                 .toList();
     }
 }

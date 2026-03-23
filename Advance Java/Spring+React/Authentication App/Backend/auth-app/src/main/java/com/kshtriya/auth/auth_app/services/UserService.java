@@ -6,7 +6,7 @@ import com.kshtriya.auth.auth_app.entity.User;
 public interface UserService {
     UserDto createUser(UserDto userDto);
     UserDto updateUser(UserDto userDto,String userId);
-    UserDto deleteUser(String userId);
+    void deleteUser(String userId);
     UserDto getUserById(String userId);
     Iterable<UserDto> getAllUsers();
     UserDto getUserByEmail(String email);
