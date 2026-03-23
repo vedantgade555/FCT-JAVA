@@ -9,7 +9,7 @@ public class ProjectConfig {
     @Bean
     public ModelMapper modelMapper(){
         ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setSkipNullEnabled(true);
+//        mapper.getConfiguration().setSkipNullEnabled(true);
         return mapper;
     }
 }

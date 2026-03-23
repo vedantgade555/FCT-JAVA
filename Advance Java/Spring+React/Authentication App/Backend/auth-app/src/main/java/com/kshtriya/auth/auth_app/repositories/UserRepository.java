@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-    Optional<User> findByEmail(String email); // when we use optional we does not require to implement ir
+    // this methods are define in jpa
+    Optional<User> findByEmail(String email); // when we use optional then exception does not occur bcoz in chance they will write null value
     boolean existsByEmail(String email);
 }

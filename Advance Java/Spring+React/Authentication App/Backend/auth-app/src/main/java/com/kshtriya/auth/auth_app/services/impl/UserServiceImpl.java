@@ -1,4 +1,4 @@
-package com.kshtriya.auth.auth_app.services;
+package com.kshtriya.auth.auth_app.services.impl;
 
 import com.kshtriya.auth.auth_app.dtos.UserDto;
 import com.kshtriya.auth.auth_app.entity.Provider;
@@ -6,13 +6,13 @@ import com.kshtriya.auth.auth_app.entity.User;
 import com.kshtriya.auth.auth_app.exceptions.ResourceNotFoundException;
 import com.kshtriya.auth.auth_app.helper.UserHelper;
 import com.kshtriya.auth.auth_app.repositories.UserRepository;
+import com.kshtriya.auth.auth_app.services.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 @Service
