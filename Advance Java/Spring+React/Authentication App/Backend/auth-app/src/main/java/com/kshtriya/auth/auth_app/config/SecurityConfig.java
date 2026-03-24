@@ -12,6 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+//Take a reference from the documentation
+// https://docs.enterprise.spring.io/spring-security/reference/migration-7/configuration.html
+
+
 @Configuration
 public class SecurityConfig {
 

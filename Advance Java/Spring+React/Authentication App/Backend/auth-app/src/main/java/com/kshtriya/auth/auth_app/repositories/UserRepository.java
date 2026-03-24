@@ -10,5 +10,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     // this methods are define in jpa
     Optional<User> findByEmail(String email); // when we use optional then exception does not occur bcoz in chance they will write null value
+    Optional<User> findByNameOrEmail(String name, String email);
     boolean existsByEmail(String email);
 }
