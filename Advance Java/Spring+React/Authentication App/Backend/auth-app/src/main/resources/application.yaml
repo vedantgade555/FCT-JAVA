@@ -5,19 +5,19 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/auth_app
     username: root
-    password: vedant@555
+    password: ${DB_PASSWORD:vedant@555}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-#      Learn and Read this properties
-#    hikari:
-#      pool-name: HikariCP
-#      maximum-pool-size: 5
-#      connection-timeout: 30000
-#      idle-timeout: 600000
-#      max-lifetime: 1800000
-#      validation-timeout: 5000
-#      leak-detection-threshold: 0
-#      initialization-fail-timeout: -1
+  #   Learn and Read this properties
+  #   hikari:
+  #     pool-name: HikariCP
+  #     maximum-pool-size: 5
+  #     connection-timeout: 30000
+  #     idle-timeout: 600000
+  #     max-lifetime: 1800000
+  #     validation-timeout: 5000
+  #     leak-detection-threshold: 0
+  #     initialization-fail-timeout: -1
 
   jpa:
     hibernate:
@@ -26,6 +26,16 @@ spring:
     # dialect can be removed
 
 server:
-#  port: 8555
+  # port: 8555
   error:
     include-message: always
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:secretKey:asdfghjkl;'4456+}
+    issuer: ${JWT_ISSUER:api.substring.com}
+    access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:3600}
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
+    refresh-token-cookies-name: ${JWT REFRESH COOKIE NAME:refreshToken}
+    cookie-secure: ${JWT COOKIE HTTP ONLY:true}
+    cookie-same-site: ${JWT COOKIE SAME SITE:lax}
