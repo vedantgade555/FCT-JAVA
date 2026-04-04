@@ -21,7 +21,6 @@ public class AuthServiceImpl implements AuthService {
         // verify password
         // default roles
 
-
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         return userService.createUser(userDto);

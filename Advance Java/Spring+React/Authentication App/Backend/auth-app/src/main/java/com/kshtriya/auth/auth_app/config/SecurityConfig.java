@@ -1,64 +1,71 @@
 package com.kshtriya.auth.auth_app.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kshtriya.auth.auth_app.security.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//Take a reference from the documentation
-// https://docs.enterprise.spring.io/spring-security/reference/migration-7/configuration.html
-
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
-                // 1. Disable CSRF so your React frontend can send POST requests to /register without a token
+                // 🔹 Disable CSRF (not needed for REST APIs)
                 .csrf(csrf -> csrf.disable())
 
-                // 2. Configure endpoint access rules using Lambda DSL
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/register").permitAll() // Open to public
-                        .anyRequest().authenticated()                         // Secure everything else
+                // 🔹 Enable CORS
+                .cors(Customizer.withDefaults())
+
+                // 🔹 Stateless session (JWT based)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
-                // 3. Enable basic authentication (useful for testing before JWT is fully set up)
+                // 🔹 Public & secured endpoints
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+
+                // 🔹 Add JWT filter
+                .addFilterBefore(jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class)
+
+                // 🔹 Custom 401 Unauthorized response
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(
+                        (request, response, authException) -> {
+
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+
+                            String message = "Unauthorized access";
+
+                            Map<String, String> error = Map.of(
+                                    "error", message
+                            );
+
+                            ObjectMapper mapper = new ObjectMapper();
+                            mapper.writeValue(response.getOutputStream(), error);
+                        }
+                ))
+
+                // 🔹 Optional basic auth
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//
-//        UserDetails user1 = User.withDefaultPasswordEncoder()
-//                .username("vedant")
-//                .password("abc")
-//                .roles("ADMIN")
-//                .build();
-//
-//        // Combined the two "Jay" users into one, giving him both roles
-//        UserDetails user2 = User.withDefaultPasswordEncoder()
-//                .username("Jay")
-//                .password("abd")
-//                .roles("ADMIN", "USER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user1, user2);
-//    }
-
 }
