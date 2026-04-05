@@ -26,7 +26,14 @@ public class User {
 
     private String password;
 
-    private USER_ROLE role =  USER_ROLE.ROLE_CUSTOMER;
+
+    private USER_ROLE role;
+    @PrePersist
+    protected void onCreate() {
+        if (this.role == null) {
+            this.role = USER_ROLE.ROLE_CUSTOMER;
+        }
+    }
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
