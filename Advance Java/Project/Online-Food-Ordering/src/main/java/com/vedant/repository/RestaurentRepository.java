@@ -13,7 +13,7 @@ public interface RestaurentRepository extends JpaRepository<Restaurant, Long> {
     // Custom JPQL query to search restaurants by name OR cuisine type (case-insensitive)
     @Query("SELECT r FROM Restaurant r " +
             "WHERE LOWER(r.name) LIKE LOWER(CONCAT('%', :query, '%')) " +
-            "OR LOWER(r.cusineType) LIKE LOWER(CONCAT('%', :query, '%'))")
+            "OR LOWER(r.cuisineType) LIKE LOWER(CONCAT('%', :query, '%'))")
 
     List<Restaurant> findSearchQuery(String query);
     // Returns list of restaurants matching the search keyword
