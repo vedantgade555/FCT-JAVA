@@ -55,7 +55,7 @@ public class AuthController {
         // Create new user object
         User createdUser = new User();
         createdUser.setEmail(user.getEmail());
-        createdUser.setFullname(user.getFullname());
+        createdUser.setFullName(user.getFullName());
         createdUser.setRole(user.getRole());
 
         // Encrypt password before saving
