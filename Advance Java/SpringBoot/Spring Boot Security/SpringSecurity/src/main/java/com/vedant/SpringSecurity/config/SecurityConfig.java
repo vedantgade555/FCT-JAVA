@@ -13,8 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,29 +23,39 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private JwtFilter jwtFilter;
+
+    // Configures the security settings for the application's HTTP requests
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                // Disable CSRF because we use JWT tokens instead of sessions
                 .csrf(customizer -> customizer.disable())
                 .httpBasic(Customizer.withDefaults())
+                // Ensure the application is stateless and does not maintain user sessions
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Configure which endpoints need authentication and which are public
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/register", "/error", "/login", "/users").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/register", "/error", "/login", "/users").permitAll() // Public endpoints
+                        .anyRequest().authenticated()) // All other endpoints require authentication
+                // Add our custom JWT filter before the standard authentication filter
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-    // used for database operations
+    // Configures the provider used to verify user credentials (username and password)
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
 
-        // NoOpPasswordEncoder means passwords are stored in plain text (no hashing)
+        // Tell Spring Security that we use BCrypt for hashing our passwords
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
 
         return provider;
     }
 
+    // Exposes the AuthenticationManager so we can use it to authenticate users (e.g., in the login method)
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
         return config.getAuthenticationManager();
