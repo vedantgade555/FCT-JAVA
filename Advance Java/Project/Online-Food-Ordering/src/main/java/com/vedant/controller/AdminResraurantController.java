@@ -35,7 +35,7 @@ public class AdminResraurantController {
         Restaurant restaurant = restaurentService.createRestaurant(req, user);
 
         // Return response with status 200 OK
-        return new ResponseEntity<>(restaurant, HttpStatus.OK);
+        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
     // API to update restaurant details
@@ -54,7 +54,7 @@ public class AdminResraurantController {
 
         // Return updated restaurant with status 201 CREATED
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
-    }
+     }
 
     // API to delete a restaurant
     @DeleteMapping("/{id}")
@@ -75,10 +75,10 @@ public class AdminResraurantController {
 
         // Return response
         return new ResponseEntity<>(messageResponse, HttpStatus.OK);
-    }
+     }
 
     // API to update restaurant status (open/close etc.)
-    @PutMapping("/{id}/ststus")
+    @PutMapping("/{id}/status")
     public ResponseEntity<Restaurant> updateRestaurantStatus(
             @RequestHeader("Authorization") String jwt, // JWT token
             @PathVariable Long id // Restaurant ID
