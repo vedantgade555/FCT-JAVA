@@ -32,7 +32,7 @@ public class UserService {
         userResponse.setEmail(saveUser.getEmail());
         userResponse.setFirstName(saveUser.getFirstName());
         userResponse.setLastName(saveUser.getLastName());
-        userResponse.setPassword(saveUser.getPassword());
+
         userResponse.setCreatedAt(saveUser.getCreatedAt());
         userResponse.setUpdatedAt(saveUser.getUpdatedAt());
         return userResponse;
@@ -46,10 +46,13 @@ public class UserService {
         userResponse.setEmail(user.getEmail());
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
-        userResponse.setPassword(user.getPassword());
+
         userResponse.setCreatedAt(user.getCreatedAt());
         userResponse.setUpdatedAt(user.getUpdatedAt());
         return userResponse;
     }
 
+    public Boolean existsByUserid(String userId) {
+        return repository.existsById(userId);
+    }
 }
