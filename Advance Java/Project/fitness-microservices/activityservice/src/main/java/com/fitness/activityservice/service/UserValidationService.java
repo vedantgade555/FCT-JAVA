@@ -1,6 +1,7 @@
 package com.fitness.activityservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus; // 1. Use Spring's HttpStatus, not Apache's
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,15 +9,17 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserValidationService {
 
     private final WebClient userServiceWebClient;
 
     // 2. Changed to public so other services can actually call this method
     public boolean validateUser(String userId) {
+        log.info("Calling User Validation API for userId: {}",userId);
         try {
             Boolean isValid = userServiceWebClient.get()
-                    .uri("/api/users/{userId}/validate", userId) // 3. Removed the extra '}' here
+                    .uri("/api/users/{userId}/validate", userId)
                     .retrieve()
                     .bodyToMono(Boolean.class)
                     .block();
