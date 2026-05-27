@@ -4,7 +4,6 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/fitnessrecommendation
-      database: fitnessrecommendation
   rabbitmq:
     host: localhost
     port: 5672
@@ -31,5 +30,5 @@ rabbitmq:
 
 gemini:
   api:
-    url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=}
-    key: ${GEMINI_API_KEY:mock-key}
+    url: ${GEMINI_API_URL}
+    key: ${GEMINI_API_KEY}

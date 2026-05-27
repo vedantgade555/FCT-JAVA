@@ -10,6 +10,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,17 +73,31 @@ public class ActivityService {
     }
 
     public List<ActivityResponse> getUserActivities(String userId) {
+
         List<Activity> activities = activityRepository.findByUserId(userId);
 
-        // Refactored to use Java Streams for cleaner mapping
-        return activities.stream()
-                .map(this::mapToActivityResponse)
-                .collect(Collectors.toList());
+        List<ActivityResponse> responseList = new ArrayList<>();
+
+        for (Activity activity : activities) {
+
+            ActivityResponse response = mapToActivityResponse(activity);
+
+            responseList.add(response);
+        }
+
+        return responseList;
     }
 
-    public ActivityResponse getActivitiyByid(String activityId) {
-        return activityRepository.findById(activityId)
-                .map(this::mapToActivityResponse)
-                .orElseThrow(() -> new RuntimeException("Activity not found with ID: " + activityId));
+    public ActivityResponse getActivityById(String activityId) {
+
+        Activity activity = activityRepository.findById(activityId).orElse(null);
+
+        if (activity == null) {
+            throw new RuntimeException("Activity not found with ID: " + activityId);
+        }
+
+        ActivityResponse response = mapToActivityResponse(activity);
+
+        return response;
     }
 }

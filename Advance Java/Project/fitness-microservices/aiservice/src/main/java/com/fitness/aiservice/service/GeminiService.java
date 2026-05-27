@@ -12,28 +12,33 @@ public class GeminiService {
     private final WebClient webClient;
 
     @Value("${gemini.api.url}")
-    private String geminiApiUrl;
+    private String apiUrl;
 
     @Value("${gemini.api.key}")
-    private String geminiApiKey;
+    private String apiKey;
 
-
-
-    public GeminiService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.build();
+    public GeminiService(WebClient.Builder builder) {
+        this.webClient = builder.build();
     }
 
-    public String getAnswer(String question){
-        Map<String,Object> requestBody = Map.of("contents",new Object[]{
-                Map.of("parts",new Object[]{
-                        Map.of("text",question)
-                })
-        } );
+    public String getAnswer(String question) {
 
-        String response = webClient.post().uri(geminiApiUrl+geminiApiKey).header("Content-Type","application/json")
-                .bodyValue(requestBody)
-                .retrieve().bodyToMono(String.class).block();
+        Map<String, Object> body = Map.of(
+                "contents", new Object[]{
+                        Map.of(
+                                "parts", new Object[]{
+                                        Map.of("text", question)
+                                }
+                        )
+                }
+        );
 
-        return response;
+        return webClient.post()
+                .uri(apiUrl + apiKey)
+                .header("Content-Type", "application/json")
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
 }

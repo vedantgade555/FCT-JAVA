@@ -1,17 +1,12 @@
 package com.fitness.aiservice.config;
 
-
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.amqp.support.converter.DefaultJackson2JavaTypeMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import java.util.Map;
 
 @Configuration
 public class RabbitMqConfig {
@@ -22,36 +17,41 @@ public class RabbitMqConfig {
     @Value("${rabbitmq.routing.key}")
     private String routingKey;
 
-    @Value("${rabbitmq.queue.name:activity.queue}") // Default value provided if missing in properties
+    @Value("${rabbitmq.queue.name}")
     private String queue;
 
+    // Queue
     @Bean
-    public Queue activityQueue(){
-        return new Queue(queue, true);
+    public Queue activityQueue() {
+        return new Queue(queue);
     }
 
+    // Exchange
     @Bean
-    public DirectExchange directExchange(){
+    public DirectExchange exchange() {
         return new DirectExchange(exchange);
     }
 
+    // Binding Queue with Exchange
     @Bean
-    public Binding activityBinding(Queue activityQueue, DirectExchange directExchange){
-        // The builder must be completed with the exchange and routing key
+    public Binding binding(Queue activityQueue, DirectExchange exchange) {
         return BindingBuilder
                 .bind(activityQueue)
-                .to(directExchange)
+                .to(exchange)
                 .with(routingKey);
     }
 
+    // JSON Converter
     @Bean
-    public MessageConverter jsonMessageConverter(com.fasterxml.jackson.databind.ObjectMapper objectMapper){
-        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter(objectMapper);
-        DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
+    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
+        org.springframework.amqp.support.converter.DefaultJackson2JavaTypeMapper typeMapper = 
+                new org.springframework.amqp.support.converter.DefaultJackson2JavaTypeMapper();
+        java.util.Map<String, Class<?>> idClassMapping = new java.util.HashMap<>();
+        idClassMapping.put("com.fitness.activityservice.model.Activity", com.fitness.aiservice.model.Activity.class);
+        typeMapper.setIdClassMapping(idClassMapping);
         typeMapper.setTrustedPackages("*");
-        typeMapper.setIdClassMapping(Map.of(
-            "com.fitness.activityservice.model.Activity", com.fitness.aiservice.model.Activity.class
-        ));
+
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter(objectMapper);
         converter.setJavaTypeMapper(typeMapper);
         return converter;
     }

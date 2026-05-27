@@ -29,7 +29,7 @@ public class ActivityController {
 
     @GetMapping("/{activityId}")
     public ResponseEntity<ActivityResponse> getActivitiesyById(@PathVariable String activityId){
-        return ResponseEntity.ok(activityService.getActivitiyByid(activityId));
+        return ResponseEntity.ok(activityService.getActivityById(activityId));
     }
 
 

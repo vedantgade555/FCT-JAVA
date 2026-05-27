@@ -12,6 +12,8 @@ import java.util.List;
 @Document(collection = "recommendations")
 @Data
 @Builder
+@lombok.NoArgsConstructor
+@lombok.AllArgsConstructor
 public class Recommendations {
     @Id
     private String id;
