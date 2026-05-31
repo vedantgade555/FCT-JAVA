@@ -1,6 +1,3 @@
-# ----------------------------------------
-# Root Level Configurations
-# ----------------------------------------
 server:
   port: 8080
 
@@ -24,13 +21,9 @@ logging:
     org.springframework.cloud.gateway: DEBUG
     reactor.netty.http.client: DEBUG
 
-# ----------------------------------------
-# Spring Level Configurations
-# ----------------------------------------
 spring:
   application:
     name: api-gateway
-
   config:
     import: optional:configserver:http://localhost:8888
 
