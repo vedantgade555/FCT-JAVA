@@ -1,5 +1,6 @@
 package com.fitness.activityservice.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -42,7 +43,7 @@ public class RabbitMqConfig {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter(com.fasterxml.jackson.databind.ObjectMapper objectMapper){
+    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper){
         return new Jackson2JsonMessageConverter(objectMapper);
     }
 }

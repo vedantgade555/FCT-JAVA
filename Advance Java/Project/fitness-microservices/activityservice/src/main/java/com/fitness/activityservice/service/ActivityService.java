@@ -90,11 +90,8 @@ public class ActivityService {
 
     public ActivityResponse getActivityById(String activityId) {
 
-        Activity activity = activityRepository.findById(activityId).orElse(null);
-
-        if (activity == null) {
-            throw new RuntimeException("Activity not found with ID: " + activityId);
-        }
+        Activity activity = activityRepository.findById(activityId)
+                .orElseThrow(() -> new RuntimeException("Activity not found with ID: " + activityId));
 
         ActivityResponse response = mapToActivityResponse(activity);
 
