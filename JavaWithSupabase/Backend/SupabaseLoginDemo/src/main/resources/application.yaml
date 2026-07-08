@@ -1,3 +1,29 @@
 spring:
   application:
     name: SupabaseLoginDemo
+  datasource:
+    url: jdbc:postgresql://db.ewkjdqmtqypgmfbonnqg.supabase.co:5432/postgres
+    username: postgres
+    password: vedant93701154
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      initialization-fail-timeout: -1
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://ewkjdqmtqypgmfbonnqg.supabase.co/auth/v1
+  sql:
+    init:
+      mode: never
+
+server:
+  port: 8080
